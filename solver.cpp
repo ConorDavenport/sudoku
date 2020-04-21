@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <string.h>
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -12,24 +13,30 @@ class Cell {
     // real value
     int rval = 0;
     // possible values
-    vector<int> pvals = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int pvals[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
   public:
+    // set actual value of cell
     void setVal(int n);
+    // get actual value of cell
     int getVal();
-    vector<int>* getPVals();
+    // get possible values of cell
+    int* getPVals();
+    // remove n from possible values vector
+    void remPVal(int n);
 };
 
 void Cell::setVal(int n) {
   rval = n;
-  pvals.resize(0);
+  if (n != 0)
+    memset(pvals, 0, sizeof(pvals));
 }
 
 int Cell::getVal() {
   return rval;
 }
 
-vector<int>* Cell::getPVals() {
-  return &pvals;
+int* Cell::getPVals() {
+  return pvals;
 }
 
 class Sudoku {
@@ -44,9 +51,10 @@ class Sudoku {
     Cell* getCell(int, int);
     void makeSquares();
     void calPvals(int, int);
-    void pvalRow(int, int);
-    void pvalCol(int, int);
-    void pvalSquare(int, int);
+    void pvalRow(Cell*, int*, int, int);
+    void pvalCol(Cell*, int*, int, int);
+    void pvalSquare(Cell*, int*, int, int);
+    void printAll();
 };
 
 // get filename from command line arguments
@@ -64,12 +72,10 @@ void Sudoku::parseData() {
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
       getline(file, field, ',');
-      int nfield = stoi(field);
-      if (nfield != 0) {
-        grid[i][j].setVal(nfield);
-      }
+      grid[i][j].setVal(stoi(field));
     }
   }
+  file.close();
 }
 
 Cell* Sudoku::getData() {
@@ -77,58 +83,64 @@ Cell* Sudoku::getData() {
 }
 
 Cell* Sudoku::getCell(int row, int col) {
-  int num = coordToNum(row, col);
-  Cell* cell = grid[num];
+  Cell* cell = &grid[row][col];
   return cell;
 }
 
 void Sudoku::makeSquares() {
-
+  
 }
 
 void Sudoku::calPvals(int row, int col) {
   Cell* thisCell = getCell(row, col);
-  vector<int>* pval = thisCell->getPVals();
-  pvalRow(row, col);
-  pvalCol(row, col);
-  pvalSquare(row, col);
+  int* pval = thisCell->getPVals();
+  pvalRow(thisCell, pval, row, col);
+  pvalCol(thisCell, pval, row, col);
+  pvalSquare(thisCell, pval, row, col);
 }
 
 // get the values present in thisCell's row and remove those from pval
-void Sudoku::pvalRow(int row, int col) {
+void Sudoku::pvalRow(Cell* thisCell, int* pval, int row, int col) {
+  int x;
+  int* ptr;
   Cell* c;
-  int v;
-  // iterate along the row
   for (int i = 0; i < 9; i++) {
-    // get the cells in the row
     c = getCell(row, i);
-    // get their value
-    v = c->getVal();
+    x = c->getVal();
+    ptr = find(pval, pval+9, x);
+    if (ptr != pval+9) {
+      // value x found in pval
+      
+    }
   }
 }
 
 // get the values present in the cell's column and remove those from pval
-void Sudoku::pvalCol(int row, int col) {
+void Sudoku::pvalCol(Cell* thisCell, int* pval, int row, int col) {
 
 }
 
 // get the values present in the cell's 3x3 square and remove those fro pval
-void Sudoku::pvalSquare(int row, int col) {
+void Sudoku::pvalSquare(Cell* thisCell, int* pval, int row, int col) {
 
+}
+
+void Sudoku::printAll() {
+  cout << "coord\tv\tpvals\n";
+  for (int i = 0; i < 9; i++) {
+    for (int j = 0; j < 9; j++) {
+      Cell* c = getCell(i, j);
+      cout << i << ", " << j << "\t" << c->getVal() << "\t";
+      int* p = c->getPVals();
+      for(int k = 0; k < 8; k++) {
+        cout << p[k];
+      }
+      cout << endl;
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
   Sudoku s(argv[1]);
-  s.calPvals(0, 0);
-  Cell* c = s.getCell(0, 0);
-  vector<int>* p = c->getPVals();
-  p->push_back(9);
-  Cell* c1 = s.getCell(0,0);
-  vector<int>* p1 = c1->getPVals();
   
-  return 0;
-}
-
-int coordToNum(int row, int col) {
-  return (row * 9) + col;
 }
