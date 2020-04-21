@@ -93,17 +93,19 @@ void Sudoku::makeSquares() {
 
 void Sudoku::calPvals(int row, int col) {
   Cell* thisCell = getCell(row, col);
-  int* pval = thisCell->getPVals();
   pvalRow(thisCell, pval, row, col);
   pvalCol(thisCell, pval, row, col);
   pvalSquare(thisCell, pval, row, col);
 }
 
 // get the values present in thisCell's row and remove those from pval
-void Sudoku::pvalRow(Cell* thisCell, int* pval, int row, int col) {
+void Sudoku::pvalRow(Cell* thisCell, int row, int col) {
   int x;
   int* ptr;
   Cell* c;
+
+  int* pval = thisCell->getPVals();
+  
   for (int i = 0; i < 9; i++) {
     c = getCell(row, i);
     x = c->getVal();
@@ -116,12 +118,12 @@ void Sudoku::pvalRow(Cell* thisCell, int* pval, int row, int col) {
 }
 
 // get the values present in the cell's column and remove those from pval
-void Sudoku::pvalCol(Cell* thisCell, int* pval, int row, int col) {
+void Sudoku::pvalCol(Cell* thisCell, int row, int col) {
 
 }
 
 // get the values present in the cell's 3x3 square and remove those fro pval
-void Sudoku::pvalSquare(Cell* thisCell, int* pval, int row, int col) {
+void Sudoku::pvalSquare(Cell* thisCell, int row, int col) {
 
 }
 
