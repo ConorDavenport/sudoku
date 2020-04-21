@@ -22,7 +22,7 @@ class Cell {
     // get possible values of cell
     int* getPVals();
     // remove n from possible values vector
-    void remPVal(int n);
+    void remPVal(int* n);
 };
 
 void Cell::setVal(int n) {
@@ -39,6 +39,10 @@ int* Cell::getPVals() {
   return pvals;
 }
 
+void Cell::remPVal(int* n) {
+  
+}
+
 class Sudoku {
   private:
     string fileName;
@@ -51,9 +55,9 @@ class Sudoku {
     Cell* getCell(int, int);
     void makeSquares();
     void calPvals(int, int);
-    void pvalRow(Cell*, int*, int, int);
-    void pvalCol(Cell*, int*, int, int);
-    void pvalSquare(Cell*, int*, int, int);
+    void pvalRow(Cell*, int);
+    void pvalCol(Cell*, int);
+    void pvalSquare(Cell*, int, int);
     void printAll();
 };
 
@@ -93,32 +97,36 @@ void Sudoku::makeSquares() {
 
 void Sudoku::calPvals(int row, int col) {
   Cell* thisCell = getCell(row, col);
-  pvalRow(thisCell, pval, row, col);
-  pvalCol(thisCell, pval, row, col);
-  pvalSquare(thisCell, pval, row, col);
+  pvalRow(thisCell, row);
+  pvalCol(thisCell, col);
+  pvalSquare(thisCell, row, col);
 }
 
 // get the values present in thisCell's row and remove those from pval
-void Sudoku::pvalRow(Cell* thisCell, int row, int col) {
+void Sudoku::pvalRow(Cell* thisCell, int row) {
   int x;
   int* ptr;
   Cell* c;
-
+  // get pvals of thisCell
   int* pval = thisCell->getPVals();
-  
+
+  // iterate through the cells on the same row as thisCell
   for (int i = 0; i < 9; i++) {
+    // get the value of each cell
     c = getCell(row, i);
     x = c->getVal();
+    // find the value of each cell in thisCell's possible values
     ptr = find(pval, pval+9, x);
     if (ptr != pval+9) {
       // value x found in pval
-      
+      // remove x from thisCell's possible values
+      thisCell->remPVal(ptr);
     }
   }
 }
 
 // get the values present in the cell's column and remove those from pval
-void Sudoku::pvalCol(Cell* thisCell, int row, int col) {
+void Sudoku::pvalCol(Cell* thisCell, int col) {
 
 }
 
@@ -144,5 +152,6 @@ void Sudoku::printAll() {
 
 int main(int argc, char* argv[]) {
   Sudoku s(argv[1]);
-  
+  s.calPvals(0,2);
+  s.printAll();
 }
