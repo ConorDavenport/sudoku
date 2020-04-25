@@ -21,8 +21,6 @@ class Cell {
     int getVal();
     // get possible values of cell
     vector<int>* getPVals();
-    // remove n from possible values vector
-    void remPVal(int* n);
 };
 
 void Cell::setVal(int n) {
@@ -40,32 +38,31 @@ vector<int>* Cell::getPVals() {
   return ptr;
 }
 
-void Cell::remPVal(int* n) {
-  
-}
-
 class Sudoku {
   private:
     string fileName;
     Cell grid[9][9];
-    Cell squares[9][3][3];
+    Cell* squares[3][3][9];
   public:
     Sudoku(string n);
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
     void makeSquares();
-    void calPvals(int, int);
+    void calPvals();
+    void calCellPvals(int, int);
     void pvalRow(Cell*, int);
     void pvalCol(Cell*, int);
     void pvalSquare(Cell*, int, int);
     void printAll();
+    Cell** getSquare(int, int);
 };
 
 // get filename from command line arguments
 Sudoku::Sudoku(string fname) {
   fileName = fname;
   parseData();
+  makeSquares();
 }
 
 // set the value of each Cell
@@ -93,10 +90,33 @@ Cell* Sudoku::getCell(int row, int col) {
 }
 
 void Sudoku::makeSquares() {
-  
+  // iterate through squares
+  for (int squareRow = 0; squareRow < 3; squareRow++) {
+    for (int squareCol = 0; squareCol < 3; squareCol++) {
+      // iterate through the cells in the square
+      for (int cellRow = 0; cellRow < 3; cellRow++) {
+        for (int cellCol = 0; cellCol < 3; cellCol++) {
+          int cellCoordRow = cellRow + (squareRow * 3);
+          int cellCoordCol = cellCol + (squareCol * 3);
+          Cell* c = getCell(cellCoordRow, cellCoordCol);
+          squares[squareRow][squareCol][(cellRow * 3) + cellCol] = c;
+        }
+      }
+    }
+  }
 }
 
-void Sudoku::calPvals(int row, int col) {
+void Sudoku::calPvals() {
+  // row
+  for(int i = 0; i < 9; i++) {
+    // column
+    for(int j = 0; j < 9; j++) {
+      calCellPvals(i, j);
+    }
+  }
+}
+
+void Sudoku::calCellPvals(int row, int col) {
   Cell* thisCell = getCell(row, col);
   pvalRow(thisCell, row);
   pvalCol(thisCell, col);
@@ -105,19 +125,43 @@ void Sudoku::calPvals(int row, int col) {
 
 // get the values present in thisCell's row and remove those from pval
 void Sudoku::pvalRow(Cell* thisCell, int row) {
-  int x;
-  int* ptr;
   Cell* c;
+  int x;
+  vector<int>* pval = thisCell->getPVals();
+  // get thisCell's pval vector
+  vector<int>& pvalRef = *pval;
+  if (pvalRef.size() != 0) {
+    // iterate through thisCell's row
+    for (int i = 0; i < 9; i++) {
+      // get the value of each cell
+      c = getCell(row, i);
+      x = c->getVal();
+      pvalRef.erase(remove(pvalRef.begin(), pvalRef.end(), x), pvalRef.end());
+    }
+  }
 }
 
 // get the values present in the cell's column and remove those from pval
 void Sudoku::pvalCol(Cell* thisCell, int col) {
-
+  Cell* c;
+  int x;
+  vector<int>* pval = thisCell->getPVals();
+  // get thisCell's pval vector
+  vector<int>& pvalRef = *pval;
+  if (pvalRef.size() != 0) {
+    // iterate through thisCell's row
+    for (int i = 0; i < 9; i++) {
+      // get the value of each cell
+      c = getCell(i, col);
+      x = c->getVal();
+      pvalRef.erase(remove(pvalRef.begin(), pvalRef.end(), x), pvalRef.end());
+    }
+  }
 }
 
 // get the values present in the cell's 3x3 square and remove those fro pval
 void Sudoku::pvalSquare(Cell* thisCell, int row, int col) {
-
+  
 }
 
 void Sudoku::printAll() {
@@ -128,12 +172,19 @@ void Sudoku::printAll() {
       cout << i << ", " << j << "\t" << c->getVal() << "\t";
       vector<int>* p = c->getPVals();
       vector<int>& pRef = *p; 
-      for(int k = 0; k < 8; k++) {
-        cout << pRef[k];
+      for(int k = 0; k < pRef.size(); k++) {
+        cout << pRef.at(k);
       }
       cout << endl;
     }
   }
+}
+
+// get square of cell(x, y)
+Cell** Sudoku::getSquare(int x, int y) {
+  int squareRow = x / 3;
+  int squareCol = y / 3;
+  return squares[squareRow][squareCol];
 }
 
 int main(int argc, char* argv[]) {
