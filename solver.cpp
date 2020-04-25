@@ -251,7 +251,6 @@ Cell** Sudoku::getSquare(int x, int y) {
 
 int main(int argc, char* argv[]) {
   Sudoku s(argv[1]);
-  int l;
   while (!s.isDone()) {
     s.calPvals();
   }
