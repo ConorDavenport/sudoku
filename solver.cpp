@@ -13,14 +13,14 @@ class Cell {
     // real value
     int rval = 0;
     // possible values
-    int pvals[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    vector<int> pvals{1, 2, 3, 4, 5, 6, 7, 8, 9};
   public:
     // set actual value of cell
     void setVal(int n);
     // get actual value of cell
     int getVal();
     // get possible values of cell
-    int* getPVals();
+    vector<int>* getPVals();
     // remove n from possible values vector
     void remPVal(int* n);
 };
@@ -28,15 +28,16 @@ class Cell {
 void Cell::setVal(int n) {
   rval = n;
   if (n != 0)
-    memset(pvals, 0, sizeof(pvals));
+    pvals.clear();
 }
 
 int Cell::getVal() {
   return rval;
 }
 
-int* Cell::getPVals() {
-  return pvals;
+vector<int>* Cell::getPVals() {
+  vector<int>* ptr = &pvals;
+  return ptr;
 }
 
 void Cell::remPVal(int* n) {
@@ -107,22 +108,6 @@ void Sudoku::pvalRow(Cell* thisCell, int row) {
   int x;
   int* ptr;
   Cell* c;
-  // get pvals of thisCell
-  int* pval = thisCell->getPVals();
-
-  // iterate through the cells on the same row as thisCell
-  for (int i = 0; i < 9; i++) {
-    // get the value of each cell
-    c = getCell(row, i);
-    x = c->getVal();
-    // find the value of each cell in thisCell's possible values
-    ptr = find(pval, pval+9, x);
-    if (ptr != pval+9) {
-      // value x found in pval
-      // remove x from thisCell's possible values
-      thisCell->remPVal(ptr);
-    }
-  }
 }
 
 // get the values present in the cell's column and remove those from pval
@@ -141,9 +126,10 @@ void Sudoku::printAll() {
     for (int j = 0; j < 9; j++) {
       Cell* c = getCell(i, j);
       cout << i << ", " << j << "\t" << c->getVal() << "\t";
-      int* p = c->getPVals();
+      vector<int>* p = c->getPVals();
+      vector<int>& pRef = *p; 
       for(int k = 0; k < 8; k++) {
-        cout << p[k];
+        cout << pRef[k];
       }
       cout << endl;
     }
@@ -152,6 +138,4 @@ void Sudoku::printAll() {
 
 int main(int argc, char* argv[]) {
   Sudoku s(argv[1]);
-  s.calPvals(0,2);
-  s.printAll();
 }
