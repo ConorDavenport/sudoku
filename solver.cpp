@@ -49,8 +49,8 @@ class Sudoku {
     Sudoku(string n);
     bool isDone();
     void done();
-    bool getHasChanged();
-    void hasChanged();
+    bool getChanged();
+    void changed();
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -80,11 +80,11 @@ void Sudoku::done() {
   doneFlag = true;
 }
 
-bool Sudoku::getHasChanged() {
+bool Sudoku::getChanged() {
   return hasChanged;
 }
 
-void Sudoku::hasChanged() {
+void Sudoku::changed() {
   hasChanged = true;
 }
 
