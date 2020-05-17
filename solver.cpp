@@ -40,7 +40,7 @@ vector<int>* Cell::getPVals() {
 
 class Sudoku {
   private:
-    bool flag = false;
+    bool doneFlag = false;
     bool hasChanged = false;
     string fileName;
     Cell grid[9][9];
@@ -49,6 +49,8 @@ class Sudoku {
     Sudoku(string n);
     bool isDone();
     void done();
+    bool getHasChanged();
+    void hasChanged();
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -71,11 +73,19 @@ Sudoku::Sudoku(string fname) {
 }
 
 bool Sudoku::isDone() {
-  return flag;
+  return doneFlag;
 }
 
 void Sudoku::done() {
-  flag = true;
+  doneFlag = true;
+}
+
+bool Sudoku::getHasChanged() {
+  return hasChanged;
+}
+
+void Sudoku::hasChanged() {
+  hasChanged = true;
 }
 
 // set the value of each Cell
