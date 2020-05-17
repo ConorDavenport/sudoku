@@ -49,8 +49,6 @@ class Sudoku {
     Sudoku(string n);
     bool isDone();
     void done();
-    bool getChanged();
-    void changed(bool);
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -78,14 +76,6 @@ bool Sudoku::isDone() {
 
 void Sudoku::done() {
   doneFlag = true;
-}
-
-bool Sudoku::getChanged() {
-  return hasChanged;
-}
-
-void Sudoku::changed(bool b) {
-  hasChanged = b;
 }
 
 // set the value of each Cell
@@ -130,8 +120,8 @@ void Sudoku::makeSquares() {
 }
 
 void Sudoku::calPvals() {
-  // stores the amount of cells whose values have been set in the current loop
-  int cellsChanged = 0;
+  // stores the amount of cells whose values are still unset
+  int unfinished = 0;
   bool f;
   // row
   for(int i = 0; i < 9; i++) {
@@ -139,13 +129,14 @@ void Sudoku::calPvals() {
     for(int j = 0; j < 9; j++) {
       // return f == true when the value of cell(i, j) has been set
       f = calCellPvals(i, j);
+      // if there are still unset cells
       if (f == false) {
-        cellsChanged++;
+        unfinished++;
       }
     }
   }
-  // if no cells have been changed in the loop
-  if (cellsChanged == 0) {
+  // if all the cells have been assigned a value
+  if (unfinished == 0) {
     done();
   }
 }
