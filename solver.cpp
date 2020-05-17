@@ -16,14 +16,17 @@ class Cell {
     vector<int> pvals{1, 2, 3, 4, 5, 6, 7, 8, 9};
   public:
     // set actual value of cell
-    void setVal(int n);
+    void setVal(int, bool);
     // get actual value of cell
     int getVal();
     // get possible values of cell
     vector<int>* getPVals();
 };
 
-void Cell::setVal(int n) {
+// n  value of cell
+// b  true; clear pvals
+//    false; don't clear pvals
+void Cell::setVal(int n, bool b) {
   rval = n;
   if (n != 0)
     pvals.clear();
@@ -60,6 +63,7 @@ class Sudoku {
     void printAll();
     Cell** getSquare(int, int);
     void saveSolution();
+    void recursiveSolve();
 };
 
 // get filename from command line arguments
@@ -82,7 +86,7 @@ void Sudoku::parseData() {
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
       getline(file, field, ',');
-      grid[i][j].setVal(stoi(field));
+      grid[i][j].setVal(stoi(field), true);
     }
   }
   file.close();
@@ -133,7 +137,7 @@ void Sudoku::calPvals() {
   // if the amount of cells of value == 0 hasn't changed since the previous
   // loop, the program will loop forever as unfinished will always be > 0
   if (unfinished == previousUnfinished) {
-    
+    recursiveSolve();
   }
   previousUnfinished = unfinished;
   // if all the cells have been assigned a value
@@ -150,7 +154,7 @@ bool Sudoku::calCellPvals(int row, int col) {
   vector<int>* pvals = thisCell->getPVals();
   vector<int>& pvalsRef = *pvals;
   if (pvalsRef.size() == 1) {
-    thisCell->setVal(pvalsRef[0]);
+    thisCell->setVal(pvalsRef[0], true);
   }
   // if the value for this cell has been calculated
   if (thisCell->getVal() != 0) {
@@ -246,6 +250,22 @@ void Sudoku::saveSolution() {
     outfile << getCell(i, 8)->getVal() << "," << endl;
   }
   outfile.close();
+}
+
+void Sudoku::recursiveSolve() {
+  for (int i = 0; i < 9; i++) {
+    for (int j = 0; j < 9; j++) {
+      Cell* c = getCell(i, j);
+      // if the cell hasn't been assigned a value
+      if (c->getVal() == 0) {
+        // set the value to the first pval
+        vector<int>* pvals = c->getPVals();
+        vector<int>& pvalsRef = *pvals;
+        c->setVal(pvalsRef[0], true);
+        return;
+      }
+    }
+  }
 }
 
 // get square of cell(x, y)
