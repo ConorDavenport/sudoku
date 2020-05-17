@@ -130,6 +130,11 @@ void Sudoku::calPvals() {
       }
     }
   }
+  // if the amount of cells of value == 0 hasn't changed since the previous
+  // loop, the program will loop forever as unfinished will always be > 0
+  if (unfinished == previousUnfinished) {
+    
+  }
   previousUnfinished = unfinished;
   // if all the cells have been assigned a value
   if (unfinished == 0) {
