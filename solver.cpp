@@ -49,6 +49,8 @@ class Sudoku {
     Sudoku(string n);
     bool isDone();
     void done();
+    bool getChanged();
+    void changed(bool);
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -76,6 +78,14 @@ bool Sudoku::isDone() {
 
 void Sudoku::done() {
   doneFlag = true;
+}
+
+bool Sudoku::getChanged() {
+  return hasChanged;
+}
+
+void Sudoku::changed(bool b) {
+  hasChanged = b;
 }
 
 // set the value of each Cell
