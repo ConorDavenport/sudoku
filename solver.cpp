@@ -41,6 +41,7 @@ vector<int>* Cell::getPVals() {
 class Sudoku {
   private:
     bool flag = false;
+    bool hasChanged = false;
     string fileName;
     Cell grid[9][9];
     Cell* squares[3][3][9];
