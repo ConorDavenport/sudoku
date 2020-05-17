@@ -49,7 +49,6 @@ class Sudoku {
   public:
     Sudoku(string n);
     bool isDone();
-    bool isMultiSoln();
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
