@@ -73,10 +73,6 @@ bool Sudoku::isDone() {
   return done;
 }
 
-bool Sudoku::isMultiSoln() {
-  return multiSoln;
-}
-
 // set the value of each Cell
 void Sudoku::parseData() {
   ifstream file;
