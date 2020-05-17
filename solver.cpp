@@ -227,7 +227,7 @@ void Sudoku::printAll() {
 }
 
 void Sudoku::saveSolution() {
-  ofstream outfile ("examples/1_solution.csv");
+  ofstream outfile ("examples/solution.csv");
   for (int i = 0; i < 9; i++) {
     outfile << getCell(i, 0)->getVal() << ",";
     outfile << getCell(i, 1)->getVal() << ",";
@@ -255,4 +255,5 @@ int main(int argc, char* argv[]) {
     s.calPvals();
   }
   s.saveSolution();
+  printf("done");
 }
