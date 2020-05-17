@@ -40,7 +40,7 @@ vector<int>* Cell::getPVals() {
 
 class Sudoku {
   private:
-    bool doneFlag = false;
+    bool done = false;
     int previousUnfinished;
     string fileName;
     Cell grid[9][9];
@@ -48,9 +48,6 @@ class Sudoku {
   public:
     Sudoku(string n);
     bool isDone();
-    void done();
-    int getPrevUnfinished();
-    void setPrevUnfinished(int);
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -73,11 +70,7 @@ Sudoku::Sudoku(string fname) {
 }
 
 bool Sudoku::isDone() {
-  return doneFlag;
-}
-
-void Sudoku::done() {
-  doneFlag = true;
+  return done;
 }
 
 // set the value of each Cell
@@ -140,7 +133,7 @@ void Sudoku::calPvals() {
   previousUnfinished = unfinished;
   // if all the cells have been assigned a value
   if (unfinished == 0) {
-    done();
+    done = true;
   }
 }
 
