@@ -41,7 +41,6 @@ vector<int>* Cell::getPVals() {
 class Sudoku {
   private:
     bool done = false;
-    bool multiSoln = false;
     int previousUnfinished;
     string fileName;
     Cell grid[9][9];
@@ -138,10 +137,7 @@ void Sudoku::calPvals() {
   // if the amount of cells of value == 0 hasn't changed since the previous
   // loop, the program will loop forever as unfinished will always be > 0
   if (unfinished == previousUnfinished) {
-    // assert multiple solution flag
-    multiSoln = true;
-    // end current loop
-    done = true;
+    
   }
   previousUnfinished = unfinished;
   // if all the cells have been assigned a value
