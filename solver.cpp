@@ -41,7 +41,7 @@ vector<int>* Cell::getPVals() {
 class Sudoku {
   private:
     bool doneFlag = false;
-    bool hasChanged = false;
+    int previousUnfinished;
     string fileName;
     Cell grid[9][9];
     Cell* squares[3][3][9];
@@ -49,8 +49,8 @@ class Sudoku {
     Sudoku(string n);
     bool isDone();
     void done();
-    bool getChanged();
-    void changed(bool);
+    int getPrevUnfinished();
+    void setPrevUnfinished(int);
     void parseData();
     Cell* getData();
     Cell* getCell(int, int);
@@ -80,12 +80,12 @@ void Sudoku::done() {
   doneFlag = true;
 }
 
-bool Sudoku::getChanged() {
-  return hasChanged;
+int Sudoku::getPrevUnfinished() {
+  return previousUnfinished;
 }
 
-void Sudoku::changed(bool b) {
-  hasChanged = b;
+void Sudoku::setPrevUnfinished(int n) {
+  previousUnfinished = n;
 }
 
 // set the value of each Cell
