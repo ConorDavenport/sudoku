@@ -80,14 +80,6 @@ void Sudoku::done() {
   doneFlag = true;
 }
 
-int Sudoku::getPrevUnfinished() {
-  return previousUnfinished;
-}
-
-void Sudoku::setPrevUnfinished(int n) {
-  previousUnfinished = n;
-}
-
 // set the value of each Cell
 void Sudoku::parseData() {
   ifstream file;
@@ -145,6 +137,7 @@ void Sudoku::calPvals() {
       }
     }
   }
+  previousUnfinished = unfinished;
   // if all the cells have been assigned a value
   if (unfinished == 0) {
     done();
