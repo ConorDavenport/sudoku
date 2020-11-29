@@ -1,3 +1,5 @@
 examples/
 .vscode/
 a.exe
+js/
+index.html
