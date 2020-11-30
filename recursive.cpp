@@ -8,11 +8,10 @@
 #include <stdio.h>
 using namespace std;
 
-// track the number of zero elements at game start
-int zeroElements = 0;
-
 // get sudoku example game
-void parseData(string fileName, int* grid, int* lookup) {
+// load game into grid
+int parseData(string fileName, int* grid, int* lookup) {
+  int zeroElements = 0;
   ifstream file;
   file.open(fileName);
   string field;
@@ -24,13 +23,13 @@ void parseData(string fileName, int* grid, int* lookup) {
     // if the current element is zero
     // increase the size of lookup by one int
     // record the index of the zero element 
-    if (grid[i] == 0) {
+    if (stoi(field) == 0) {
       zeroElements++;
-      lookup = (int*)realloc(lookup, zeroElements * sizeof(int));
       lookup[zeroElements - 1] = i;
     }
   }
   file.close();
+  return zeroElements;
 }
 
 void display(int* grid) {
@@ -62,12 +61,12 @@ int main(int argc, char* argv[]) {
   // lookup table to keep track of which
   // cells in the grid are zero at the start
   // of the game
-  int* lookup = (int*)malloc(0);
+  int* lookup = (int*)malloc(81 * sizeof(int));
 
-  parseData(argv[1], grid, lookup);
-
-  for (int i = 0; i < zeroElements; i++) {
-    cout << lookup[i] << endl;
+  int lookupLength = parseData(argv[1], grid, lookup);
+  
+  for (int i = 0; i < lookupLength; i++) {
+    printf("%d\n", lookup[i]);
   }
 
   free(grid);
