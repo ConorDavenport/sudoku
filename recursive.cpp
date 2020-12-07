@@ -40,19 +40,32 @@ void display(int* grid) {
   }
 }
 
-void check(int* grid) {
+bool check(int* grid, int n) {
+  // check row
+  int rowStartIndex = n - n%9;
+  for(int i = rowStartIndex; i < rowStartIndex + 9; i++) {
+    printf("%d", grid[i]);
+  }
+  printf("\n");
+  // check col
+  for (int i = (0 + n%9); i < 81; i += 9) {
+    printf("%d", grid[i]);
+  }
+  // check square
   
+  return false;
 }
 
-void solve(int* grid, int n) {
-  if (n == 81) {
-    return;
+// n is the current lookup index
+void solve(int* grid, int* lookup, int n, int l) {
+  for (int i = 1; i < 10; i++) {
+    grid[lookup[n]] = i;
+    check(grid, lookup[n]);
   }
-
-  if (grid[n] == 0)
-    cout << n << endl;
+  if (n == l - 1)
+    return;
   n++;
-  solve(grid, n);
+  solve(grid, lookup, n, l);
 }
 
 int main(int argc, char* argv[]) {
@@ -64,11 +77,16 @@ int main(int argc, char* argv[]) {
   int* lookup = (int*)malloc(81 * sizeof(int));
 
   int lookupLength = parseData(argv[1], grid, lookup);
-  
-  for (int i = 0; i < lookupLength; i++) {
-    printf("%d\n", lookup[i]);
-  }
 
+  //solve(grid, lookup, 0, lookupLength);
+
+  // for (int i = 0; i < 81; i++) {
+  //   if (i % 9 == 0) {
+  //     printf("\n");
+  //   }
+  //   printf("%d", grid[i]);
+  // }
+  bool b = check(grid, 57);
   free(grid);
   free(lookup);
   return 0;
