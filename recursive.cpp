@@ -18,14 +18,6 @@ void parseData(string fileName, int* grid, int* lookup) {
   for (int i = 0; i < 81; i++) {
     getline(file, field, ','); // read char from example
     grid[i] = stoi(field);  // string to int
-
-    // if the current element is zero
-    // increase the size of lookup by one int
-    // record the index of the zero element 
-    if (stoi(field) == 0) {
-      zeroElements++;
-      lookup[zeroElements - 1] = i;
-    }
   }
   file.close();
 }
@@ -80,6 +72,5 @@ int main(int argc, char* argv[]) {
   // }
   bool b = check(grid, 57);
   free(grid);
-  free(lookup);
   return 0;
 }
