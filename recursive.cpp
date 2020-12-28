@@ -21,6 +21,7 @@ void parseData(string fileName, int* grid) {
   file.close();
 }
 
+// print grid
 void display(int* grid) {
   for (int i = 0; i < 81; i++) {
     if ((i % 9) == 0)
@@ -30,6 +31,7 @@ void display(int* grid) {
   printf("\n");
 }
 
+// right now only prints the row, col, and 3x3 of cell n
 bool check(int* grid, int n) {
   // check row
   int rowStartIndex = n - n%9;
@@ -37,29 +39,31 @@ bool check(int* grid, int n) {
     printf("%d", grid[i]);
   }
   printf("\n");
+  
   // check col
   for (int i = (0 + n%9); i < 81; i += 9) {
     printf("%d\n", grid[i]);
   }
   // check square
-//   ━━━━━━━━ X ━━━━━━━━                                                                        
-// ┃ ┏━━━━━┳━━━━━┳━━━━━┓                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┣━━━━━╋━━━━━╋━━━━━┫                              
-//   ┃     ┃     ┃     ┃                              
-// Y ┃     ┃     ┃     ┃                              
-//   ┃     ┃     ┃     ┃                              
-// ┃ ┣━━━━━╋━━━━━╋━━━━━┫                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┃     ┃     ┃     ┃                              
-// ┃ ┗━━━━━┻━━━━━┻━━━━━┛                              
+//    ━━━━━━━━ X ━━━━━━━━                                                                        
+//       0     1     2
+// ┃  ┏━━━━━┳━━━━━┳━━━━━┓                              
+// ┃  ┃     ┃     ┃     ┃                              
+// ┃ 0┃     ┃     ┃     ┃                              
+// ┃  ┃     ┃     ┃     ┃                              
+// ┃  ┣━━━━━╋━━━━━╋━━━━━┫                              
+//    ┃     ┃     ┃     ┃                              
+// Y 1┃     ┃     ┃     ┃                              
+//    ┃     ┃     ┃     ┃                              
+// ┃  ┣━━━━━╋━━━━━╋━━━━━┫                              
+// ┃  ┃     ┃     ┃     ┃                              
+// ┃ 2┃     ┃     ┃     ┃                              
+// ┃  ┃     ┃     ┃     ┃                              
+// ┃  ┗━━━━━┻━━━━━┻━━━━━┛                              
                
   int squareX = (n%9)/3;
   int squareY = (n/9)/3;
-
+  // get upper left cell of the square
   int squareStart = (3*squareX) + (27*squareY);
   vector<int> square;
   for(int i = 0; i < 3; i++) {
