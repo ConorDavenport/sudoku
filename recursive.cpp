@@ -47,29 +47,16 @@ bool check(int* grid, int n) {
 }
 
 // n is the current lookup index
-void solve(int* grid, int* lookup, int n, int l) {
-  for (int i = 1; i < 10; i++) {
-    grid[lookup[n]] = i;
-    check(grid, lookup[n]);
-  }
-  if (n == l - 1)
-    return;
-  n++;
-  solve(grid, lookup, n, l);
+void solve(int* grid) {
+  
 }
 
 int main(int argc, char* argv[]) {
   // init memory for grid
   int* grid = (int*)malloc(81 * sizeof(int));
 
-  //solve(grid, lookup, 0, lookupLength);
+  solve(grid);
 
-  // for (int i = 0; i < 81; i++) {
-  //   if (i % 9 == 0) {
-  //     printf("\n");
-  //   }
-  //   printf("%d", grid[i]);
-  // }
   bool b = check(grid, 57);
   free(grid);
   return 0;
