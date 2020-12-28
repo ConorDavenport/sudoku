@@ -48,7 +48,7 @@ bool check(int* grid, int n) {
 
 // n is the current lookup index
 void solve(int* grid) {
-  
+
 }
 
 int main(int argc, char* argv[]) {
@@ -57,7 +57,8 @@ int main(int argc, char* argv[]) {
 
   solve(grid);
 
-  bool b = check(grid, 57);
+  display(grid);
+
   free(grid);
   return 0;
 }
