@@ -10,8 +10,7 @@ using namespace std;
 
 // get sudoku example game
 // load game into grid
-int parseData(string fileName, int* grid, int* lookup) {
-  int zeroElements = 0;
+void parseData(string fileName, int* grid, int* lookup) {
   ifstream file;
   file.open(fileName);
   string field;
@@ -29,7 +28,6 @@ int parseData(string fileName, int* grid, int* lookup) {
     }
   }
   file.close();
-  return zeroElements;
 }
 
 void display(int* grid) {
@@ -71,12 +69,6 @@ void solve(int* grid, int* lookup, int n, int l) {
 int main(int argc, char* argv[]) {
   // init memory for grid
   int* grid = (int*)malloc(81 * sizeof(int));
-  // lookup table to keep track of which
-  // cells in the grid are zero at the start
-  // of the game
-  int* lookup = (int*)malloc(81 * sizeof(int));
-
-  int lookupLength = parseData(argv[1], grid, lookup);
 
   //solve(grid, lookup, 0, lookupLength);
 
