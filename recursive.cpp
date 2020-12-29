@@ -98,16 +98,8 @@ bool check(vector<int>& grid, int n) {
   return true;
 }
 
-int stack_push(vector<int> grid, vector<int> stack) {
-  
-}
-
-int stack_pop(vector<int> stack) {
-
-}
-
 // n is the current cell index
-void solve(vector<int>& grid, int& n, vector<int>& stack) {
+void solve(vector<int>& grid, int& n, vector<vector<int>>& stack) {
 
 }
 
@@ -118,7 +110,7 @@ int main(int argc, char* argv[]) {
   parseData(argv[1], grid);
 
   int n = 0;
-  vector<int> stack;
+  vector<vector<int>> stack;
   solve(grid, n, stack);
 
   return 0;
