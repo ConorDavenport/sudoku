@@ -118,6 +118,7 @@ int main(int argc, char* argv[]) {
 
   parseData(argv[1], grid);
 
+  // fifo stack to hold game states
   vector<vector<int>> stack;
   stack.push_back(grid);
   solve(stack);
