@@ -33,6 +33,7 @@ void display(int* grid) {
 
 // right now only prints the row, col, and 3x3 of cell n
 bool check(int* grid, int n) {
+  vector<int> square, row, col;
   // check row
   int rowStartIndex = n - n%9;
   for(int i = rowStartIndex; i < rowStartIndex + 9; i++) {
@@ -65,7 +66,7 @@ bool check(int* grid, int n) {
   int squareY = (n/9)/3;
   // get upper left cell of the square
   int squareStart = (3*squareX) + (27*squareY);
-  vector<int> square;
+
   for(int i = 0; i < 3; i++) {
     for(int j = squareStart + (9*i); j < (squareStart + (9*i)) + 3; j++) {
       square.push_back(grid[j]);
