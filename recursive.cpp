@@ -9,26 +9,16 @@ using namespace std;
 
 // get sudoku example game
 // load game into grid
-void parseData(string fileName, int* grid) {
+void parseData(string fileName, vector<int>& grid) {
   ifstream file;
   file.open(fileName);
   string field;
 
   for (int i = 0; i < 81; i++) {
     getline(file, field, ','); // read char from example
-    grid[i] = stoi(field);  // string to int
+    grid.push_back(stoi(field));  // string to int
   }
   file.close();
-}
-
-// print grid
-void display(int* grid) {
-  for (int i = 0; i < 81; i++) {
-    if ((i % 9) == 0)
-      printf("\n");
-    printf("%d", grid[i]);
-  }
-  printf("\n");
 }
 
 bool isUnique(vector<int> v) {
@@ -49,7 +39,7 @@ void printVec(vector<int> v) {
 }
 
 // right now only prints the row, col, and 3x3 of cell n
-bool check(int* grid, int n) {
+bool check(vector<int>& grid, int n) {
   vector<int> square, row, col;
   // check row
   int rowStartIndex = n - n%9;
@@ -108,31 +98,28 @@ bool check(int* grid, int n) {
   return true;
 }
 
-int stack_push(int* grid, int* stack) {
+int stack_push(vector<int> grid, vector<int> stack) {
   
 }
 
-int stack_pop(int* stack) {
+int stack_pop(vector<int> stack) {
 
 }
 
 // n is the current cell index
-void solve(int* grid, int& n, int* stack) {
+void solve(vector<int>& grid, int& n, vector<int>& stack) {
 
 }
 
 int main(int argc, char* argv[]) {
   // init memory for grid
-  int* grid = (int*)malloc(81 * sizeof(int));
+  vector<int> grid;
 
   parseData(argv[1], grid);
 
   int n = 0;
-  int* stack = (int*)malloc(81 * sizeof(int));
+  vector<int> stack;
   solve(grid, n, stack);
 
-  display(grid);
-
-  free(grid);
   return 0;
 }
