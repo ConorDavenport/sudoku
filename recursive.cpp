@@ -37,13 +37,10 @@ bool check(int* grid, int n) {
   // check row
   int rowStartIndex = n - n%9;
   for(int i = rowStartIndex; i < rowStartIndex + 9; i++) {
-    printf("%d", grid[i]);
   }
-  printf("\n");
   
   // check col
   for (int i = (0 + n%9); i < 81; i += 9) {
-    printf("%d\n", grid[i]);
   }
   // check square
 //    ━━━━━━━━ X ━━━━━━━━                                                                        
@@ -71,10 +68,6 @@ bool check(int* grid, int n) {
     for(int j = squareStart + (9*i); j < (squareStart + (9*i)) + 3; j++) {
       square.push_back(grid[j]);
     }
-  }
-  for (vector<int>::const_iterator i = square.begin(); 
-       i != square.end(); ++i) {
-    printf("%d", *i);
   }
   return false;
 }
