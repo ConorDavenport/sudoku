@@ -1,3 +1,4 @@
 examples/
 .vscode/
 a.exe
+solver.cpp
