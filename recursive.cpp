@@ -39,7 +39,7 @@ void printVec(vector<int> v) {
 }
 
 // returns false if cell n doesn't fit
-bool check(vector<int>& grid, int n) {
+bool check(vector<int> grid, int n) {
   vector<int> square, row, col;
   // check row
   int rowStartIndex = n - n%9;
@@ -47,7 +47,7 @@ bool check(vector<int>& grid, int n) {
     if(grid[i] != 0)
       row.push_back(grid[i]);
   }
-
+  
   if(!isUnique(row)) {
     return false;
   }
@@ -144,7 +144,9 @@ int main(int argc, char* argv[]) {
   // fifo stack to hold game states
   vector<vector<int>> stack;
   stack.push_back(grid);
-  int s = solve(stack);
-  printVec(stack.back());
+  //int s = solve(stack);
+
+  printf("%s\n",check(grid, 2) ? "true" : "false");
+
   return 0;
 }
