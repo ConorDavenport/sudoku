@@ -40,6 +40,14 @@ bool isUnique(vector<int> v) {
   }
 }
 
+void printVec(vector<int> v) {
+  for (vector<int>::const_iterator i = v.begin(); 
+       i != v.end(); ++i) {
+    printf("%d ", *i);
+  }
+  printf("\n");
+}
+
 // right now only prints the row, col, and 3x3 of cell n
 bool check(int* grid, int n) {
   vector<int> square, row, col;
