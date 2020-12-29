@@ -98,8 +98,17 @@ bool check(vector<int>& grid, int n) {
   return true;
 }
 
+int findZero(vector<int> v) {
+  vector<int>::iterator it = find(v.begin(), v.end(), 0);
+  if (it != v.end()) {
+    return it - v.begin();
+  } else {
+    return -1;
+  }
+}
+
 // n is the current cell index
-void solve(vector<int>& grid, int& n, vector<vector<int>>& stack) {
+void solve(vector<vector<int>>& stack) {
 
 }
 
@@ -109,9 +118,9 @@ int main(int argc, char* argv[]) {
 
   parseData(argv[1], grid);
 
-  int n = 0;
   vector<vector<int>> stack;
-  solve(grid, n, stack);
+  stack.push_back(grid);
+  solve(stack);
 
   return 0;
 }
