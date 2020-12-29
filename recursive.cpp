@@ -31,17 +31,39 @@ void display(int* grid) {
   printf("\n");
 }
 
+bool isUnique(vector<int> v) {
+  vector<int>::iterator it = unique(v.begin(), v.end());
+  if(it == v.end()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // right now only prints the row, col, and 3x3 of cell n
 bool check(int* grid, int n) {
   vector<int> square, row, col;
   // check row
   int rowStartIndex = n - n%9;
   for(int i = rowStartIndex; i < rowStartIndex + 9; i++) {
+    if(grid[i] != 0)
+      row.push_back(grid[i]);
   }
-  
+
+  if(!isUnique(row)) {
+    return false;
+  }
+
   // check col
   for (int i = (0 + n%9); i < 81; i += 9) {
+    if(grid[i] != 0)
+      col.push_back(grid[i]);
   }
+
+  if(!isUnique(col)) {
+    return false;
+  }
+
   // check square
 //    ━━━━━━━━ X ━━━━━━━━                                                                        
 //       0     1     2
@@ -66,10 +88,16 @@ bool check(int* grid, int n) {
 
   for(int i = 0; i < 3; i++) {
     for(int j = squareStart + (9*i); j < (squareStart + (9*i)) + 3; j++) {
-      square.push_back(grid[j]);
+      if(grid[i] != 0)
+        square.push_back(grid[j]);
     }
   }
-  return false;
+
+  if(!isUnique(square)) {
+    return false;
+  }
+
+  return true;
 }
 
 // n is the current lookup index
@@ -87,7 +115,7 @@ int main(int argc, char* argv[]) {
 
   display(grid);
 
-  check(grid, 64);
+  printf("%s", check(grid, 0) ? "unique" : "duplicate");
 
   free(grid);
   return 0;
