@@ -94,10 +94,10 @@ bool check(int* grid, int n) {
   // get upper left cell of the square
   int squareStart = (3*squareX) + (27*squareY);
 
-  for(int i = 0; i < 3; i++) {
-    for(int j = squareStart + (9*i); j < (squareStart + (9*i)) + 3; j++) {
+  for(int j = 0; j < 3; j++) {
+    for(int i = squareStart + (9*j); i < (squareStart + (9*j)) + 3; i++) {
       if(grid[i] != 0)
-        square.push_back(grid[j]);
+        square.push_back(grid[i]);
     }
   }
 
