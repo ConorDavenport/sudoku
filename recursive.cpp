@@ -107,9 +107,33 @@ int findZero(vector<int> v) {
   }
 }
 
-// n is the current cell index
-void solve(vector<vector<int>>& stack) {
-
+// return codes
+// 0  no zero cells left
+int solve(vector<vector<int>>& stack) {
+  // get working game state
+  vector<int> grid = stack.back();
+  // find index of next zero cell to try numbers in
+  int cell = findZero(grid);
+  if (-1 == cell || cell > 80) {
+    printf("cannot find zero filled cell\n");
+    return 0;
+  }
+  // try numbers
+  for (int i = 1; i < 10; i++) {
+    grid[cell] = i;
+    // if number i works in the cell
+    if (check(grid, cell)) {
+      stack.push_back(grid);
+      if (0 == solve(stack)) {
+        return 0;
+      }
+    }
+  }
+  // if no numbers work in cell
+  // go back to previous game state
+  stack.pop_back();
+  solve(stack);
+  return 1;
 }
 
 int main(int argc, char* argv[]) {
@@ -121,7 +145,7 @@ int main(int argc, char* argv[]) {
   // fifo stack to hold game states
   vector<vector<int>> stack;
   stack.push_back(grid);
-  solve(stack);
+  printf("%i\n", solve(stack));
 
   return 0;
 }
