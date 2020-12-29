@@ -123,8 +123,6 @@ int main(int argc, char* argv[]) {
 
   display(grid);
 
-  printf("%s", check(grid, 0) ? "unique" : "duplicate");
-
   free(grid);
   return 0;
 }
