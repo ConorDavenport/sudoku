@@ -22,6 +22,7 @@ void parseData(string fileName, vector<int>& grid) {
 }
 
 bool isUnique(vector<int> v) {
+  sort(v.begin(), v.end());
   vector<int>::iterator it = unique(v.begin(), v.end());
   if(it == v.end()) {
     return true;
@@ -47,7 +48,7 @@ bool check(vector<int> grid, int n) {
     if(grid[i] != 0)
       row.push_back(grid[i]);
   }
-  
+
   if(!isUnique(row)) {
     return false;
   }
@@ -144,9 +145,7 @@ int main(int argc, char* argv[]) {
   // fifo stack to hold game states
   vector<vector<int>> stack;
   stack.push_back(grid);
-  //int s = solve(stack);
-
-  printf("%s\n",check(grid, 2) ? "true" : "false");
+  int s = solve(stack);
 
   return 0;
 }
