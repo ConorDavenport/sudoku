@@ -108,8 +108,16 @@ bool check(int* grid, int n) {
   return true;
 }
 
-// n is the current lookup index
-void solve(int* grid) {
+int stack_push(int* grid, int* stack) {
+  
+}
+
+int stack_pop(int* stack) {
+
+}
+
+// n is the current cell index
+void solve(int* grid, int& n, int* stack) {
 
 }
 
@@ -119,7 +127,9 @@ int main(int argc, char* argv[]) {
 
   parseData(argv[1], grid);
 
-  solve(grid);
+  int n = 0;
+  int* stack = (int*)malloc(81 * sizeof(int));
+  solve(grid, n, stack);
 
   display(grid);
 
