@@ -118,7 +118,6 @@ int solve(vector<vector<int>>& stack) {
   if (-1 == cell || cell > 80) {
     return 0;
   }
-  printf("\n%d",cell);
   // try numbers
   for (int i = 1; i < 11; i++) {
     grid[cell] = i;
@@ -128,7 +127,6 @@ int solve(vector<vector<int>>& stack) {
     }
     // if number i works in the cell
     else if (check(grid, cell)) {
-      printf(" %d",i);
       stack.push_back(grid);
       if (0 == solve(stack)) {
         return 0;
@@ -148,5 +146,6 @@ int main(int argc, char* argv[]) {
   vector<vector<int>> stack;
   stack.push_back(grid);
   solve(stack);
+  printVec(stack.back());
   return 0;
 }
