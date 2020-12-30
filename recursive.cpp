@@ -120,10 +120,14 @@ int solve(vector<vector<int>>& stack) {
   }
   printf("\n%d",cell);
   // try numbers
-  for (int i = 1; i < 10; i++) {
+  for (int i = 1; i < 11; i++) {
     grid[cell] = i;
+    if (10 == i) {
+      stack.pop_back();
+      return 1;
+    }
     // if number i works in the cell
-    if (check(grid, cell)) {
+    else if (check(grid, cell)) {
       printf(" %d",i);
       stack.push_back(grid);
       if (0 == solve(stack)) {
@@ -131,10 +135,6 @@ int solve(vector<vector<int>>& stack) {
       }
     }
   }
-  // if no numbers work in cell
-  // go back to previous game state
-  stack.pop_back();
-  solve(stack);
   return 1;
 }
 
@@ -147,6 +147,6 @@ int main(int argc, char* argv[]) {
   // fifo stack to hold game states
   vector<vector<int>> stack;
   stack.push_back(grid);
-  printf("%i\n", solve(stack));
+  solve(stack);
   return 0;
 }
