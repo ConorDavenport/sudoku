@@ -14,9 +14,9 @@ Example games can be found in `examples/`.
 
 ## How to run the solver
 Pass one of the examples to the executable as a command line
-argument. For example; `a.exe examples/1.csv`.
+argument. For example; `a.exe examples/1.csv`. The solution is saved
+into `examples/solution.csv`.
 
 ## Solving a custom game
 Transcribe your game into a csv file. Each value is separated by a
 comma, and blank cells are represented by a zero.
-
