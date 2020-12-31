@@ -21,6 +21,21 @@ void parseData(string fileName, vector<int>& grid) {
   file.close();
 }
 
+void save(vector<int> v) {
+  ofstream file;
+  file.open("examples/solution.csv");
+  int i = 0;
+  for (vector<int>::const_iterator it = v.begin();
+       it < v.end(); it++) { 
+    i++;
+    file << *it << ","; 
+    if (0 == i%9) {
+      file << endl;
+    }
+  }
+  file.close();
+}
+
 bool isUnique(vector<int> v) {
   sort(v.begin(), v.end());
   vector<int>::iterator it = unique(v.begin(), v.end());
@@ -146,6 +161,6 @@ int main(int argc, char* argv[]) {
   vector<vector<int>> stack;
   stack.push_back(grid);
   solve(stack);
-  printVec(stack.back());
+  save(stack.back());
   return 0;
 }
