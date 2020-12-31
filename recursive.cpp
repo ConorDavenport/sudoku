@@ -161,6 +161,14 @@ int main(int argc, char* argv[]) {
   vector<vector<int>> stack;
   stack.push_back(grid);
   solve(stack);
+
+  for (int i = 0; i < grid.size(); i++) {
+    if (!check(grid, i)) {
+      printf("unsolved");
+      return 1;
+    }
+  }
+
   save(stack.back());
   return 0;
 }
